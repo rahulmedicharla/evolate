@@ -17,7 +17,7 @@ class SinglyLinkedList():
         self.tail = None
         self.size = 0
     
-    def add_item(self, value):
+    def add_item(self, value) -> Node:
         #edge case to check for whether it is the first item in the singly linked list;
         if(self.is_empty()):
             self.head = Node(self.size, value, DataType.SINGLY_LINKED_LIST)
@@ -29,7 +29,7 @@ class SinglyLinkedList():
         
         self.size += 1
 
-    #function to iterate through linked list, pass in function that is to be called and it will call it per iteration
+    #function to iterate through linked list and print data
     def iterate(self) -> None:
         current = self.head
         while current != None:
