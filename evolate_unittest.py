@@ -10,85 +10,132 @@ class YourDataStructureTest(unittest.TestCase):
         # Create an instance of your custom data structure for testing
         self.data_structure = Evolate(DataType.SINGLY_LINKED_LIST)
 
-    def test_add_and_get(self):
-        # Add some elements to the data structure
+    def test_add(self):
+        self.data_structure.add("value1")
+
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
+
+    def test_multiple_add(self):
+        self.data_structure.add("value1")
+        self.data_structure.add("value2")
+
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
+        self.assertEqual(self.data_structure.get(1).get_value(), "value2")
+
+    def test_empty_get(self):
+        response = self.data_structure.get(0)
+
+        self.assertEqual(response, ResponseType.EMPTY_LIST)
+
+    def test_first_element_get(self):
+        self.data_structure.add("value1")
+        response = self.data_structure.get(0)
+
+        self.assertEqual(response.get_value(), "value1")
+    
+    def test_index_out_of_bounds(self):
+        self.data_structure.add("value1")
+
+        response = self.data_structure.get(1)
+
+        self.assertEqual(response, ResponseType.NODE_NOT_FOUND)
+    
+    def test_multiple_get(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
         self.data_structure.add("value3")
 
-        # Test the get function to retrieve the added elements
-        self.assertEqual(self.data_structure.get(0).value, "value1")
-        self.assertEqual(self.data_structure.get(1).value, "value2")
-        self.assertEqual(self.data_structure.get(2).value, "value3")
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
+        self.assertEqual(self.data_structure.get(1).get_value(), "value2")
+        self.assertEqual(self.data_structure.get(2).get_value(), "value3")
 
-    def test_remove(self):
-        # Add some elements to the data structure
+    def test_remove_empty(self):
+        response = self.data_structure.remove(0)
+
+        self.assertEqual(response, ResponseType.EMPTY_LIST)
+    
+    def test_remove_one(self):
+        self.data_structure.add("value1")
+        res = self.data_structure.remove(0)
+
+        self.assertEqual(res.get_value(), "value1")
+        self.assertEqual(self.data_structure.get_length(), 0)
+    
+    def test_remove_index_out_of_bounds(self):
+        self.data_structure.add("value1")
+
+        res = self.data_structure.remove(1)
+
+        self.assertEqual(res, ResponseType.NODE_NOT_FOUND)
+
+    def test_remove_multiple(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
         self.data_structure.add("value3")
 
-        # Remove an element and verify it is no longer present
-        node = self.data_structure.remove(1)
-        self.assertNotEqual(self.data_structure.get(1), node.value)
+        res = self.data_structure.remove(1)
 
-    def test_update(self):
-        # Add an element to the data structure
-        self.data_structure.add("value1")
+        self.assertEqual(res.get_value(), "value2")
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
+        self.assertEqual(self.data_structure.get(1).get_value(), "value3")
+        self.assertEqual(self.data_structure.get_length(), 2)
 
-        # Update the value of an existing element
-        self.data_structure.update(0, "new_value")
-
-        # Verify that the value has been updated
-        self.assertEqual(self.data_structure.get(0).value, "new_value")
-
-    def test_get_nonexistent_key(self):
-        # Try to retrieve a value for a key that does not exist
-        result = self.data_structure.get("nonexistent_key")
-
-        # Verify that the result is None
-        self.assertEqual(result, ResponseType.EMPTY_LIST)
-
-    def test_add_and_get_multiple_data_types(self):
-        # Add elements of different data types to the data structure
-        self.data_structure.add("string")
-        self.data_structure.add(123)
-        self.data_structure.add(True)
-
-        # Test the get function to retrieve the added elements
-        self.assertEqual(self.data_structure.get(0).value, "string")
-        self.assertEqual(self.data_structure.get(1).value, 123)
-        self.assertEqual(self.data_structure.get(2).value, True)
-
-    def test_remove_invalid_index(self):
-        # Add some elements to the data structure
-        self.data_structure.add("value1")
-        self.data_structure.add("value2")
-
-        # Try to remove an element at an invalid index
-        self.assertEqual(self.data_structure.remove(2), ResponseType.NODE_NOT_FOUND)
-
-    def test_update_invalid_index(self):
-        # Add an element to the data structure
-        self.data_structure.add("value1")
-
-        # Try to update an element at an invalid index
-        result = self.data_structure.update(1, "new_value")
-
-        # Verify that the update operation fails and returns False
-        self.assertEqual(result, ResponseType.NODE_NOT_FOUND)
-
-    def test_get_size(self):
-        # Add some elements to the data structure
+    def test_multiple_remove(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
         self.data_structure.add("value3")
 
-        # Get the size of the data structure
-        length = self.data_structure.get_length()
+        res = self.data_structure.remove(1)
+        res2 = self.data_structure.remove(1)
 
-        # Verify that the size matches the number of added elements
-        self.assertEqual(length, 3)
+        self.assertEqual(res.get_value(), "value2")
+        self.assertEqual(res2.get_value(), "value3")
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
+        self.assertEqual(self.data_structure.get_length(), 1)
 
+    def test_update_empty(self):
+        res = self.data_structure.update(0, "temp")
+
+        self.assertEqual(res, ResponseType.EMPTY_LIST)
+
+    def test_update_one(self):
+        self.data_structure.add("value1")
+
+        res = self.data_structure.update(0, "value2")
+
+        self.assertEqual(res, ResponseType.SUCCESS)
+        self.assertEqual(self.data_structure.get(0).get_value(), "value2")
+    
+    def test_update_multiple(self):
+        self.data_structure.add("value1")
+        self.data_structure.add("value2")
+        self.data_structure.add("value3")
+
+        res = self.data_structure.update(1, "value4")
+
+        self.assertEqual(res, ResponseType.SUCCESS)
+        self.assertEqual(self.data_structure.get(1).get_value(), "value4")
+    
+    def test_mulitple_update(self):
+        self.data_structure.add("value1")
+        self.data_structure.add("value2")
+        self.data_structure.add("value3")
+
+        res = self.data_structure.update(1, "value4")
+        res2 = self.data_structure.update(2, "value5")
+
+        self.assertEqual(res, ResponseType.SUCCESS)
+        self.assertEqual(self.data_structure.get(1).get_value(), "value4")
+        self.assertEqual(res2, ResponseType.SUCCESS)
+        self.assertEqual(self.data_structure.get(2).get_value(), "value5")
+    
+    def test_update_out_of_bounds(self):
+        self.data_structure.add("value1")
+
+        res = self.data_structure.update(3, "value2")
+
+        self.assertEqual(res, ResponseType.NODE_NOT_FOUND)
+        self.assertEqual(self.data_structure.get(0).get_value(), "value1")
 
 if __name__ == '__main__':
     unittest.main()

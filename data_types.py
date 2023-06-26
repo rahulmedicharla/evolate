@@ -9,6 +9,7 @@ from abc import ABC, abstractmethod
 #ENUMS for data types
 class DataType(Enum):
     SINGLY_LINKED_LIST = 0
+    QUEUE = 1
 
 #ENUMS for error types
 class ResponseType(Enum):
@@ -37,6 +38,11 @@ class NodeInterface(ABC):
     #function get key of node
     @abstractmethod
     def get_key(self) -> int:
+        pass
+
+    #function to get value of node
+    @abstractmethod
+    def get_value(self) -> any:
         pass
 
 

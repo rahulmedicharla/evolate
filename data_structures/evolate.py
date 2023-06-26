@@ -5,6 +5,7 @@
 
 from data_types import DataType, ResponseType, NodeInterface
 from data_structures.singly_linked_list import SinglyLinkedList
+from data_structures.queue import Queue
 
 class Evolate():
 
@@ -23,6 +24,8 @@ class Evolate():
         #set _rep based on data_type passed in
         if data_type == DataType.SINGLY_LINKED_LIST:
             self.rep = SinglyLinkedList()
+        elif data_type == DataType.QUEUE:
+            self.rep = Queue()
 
     """
     **************************************************************************************************************

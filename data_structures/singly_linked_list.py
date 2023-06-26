@@ -161,6 +161,7 @@ class SinglyLinkedList(SubDataStructure):
     def is_empty(self) -> bool:
         return self.length == 0
     
+    #shifts the keys of the Nodes down when item is removed
     def shift_keys_down(self, current: NodeInterface) -> ResponseType:
         while current != None:
             new_key = current.get_key() -1

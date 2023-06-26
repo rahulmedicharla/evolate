@@ -39,4 +39,7 @@ class Node(NodeInterface):
 
     def get_key(self) -> int:
         return self.key
+    
+    def get_value(self) -> any:
+        return self.value
         
