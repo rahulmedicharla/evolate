@@ -10,6 +10,7 @@ from abc import ABC, abstractmethod
 class DataType(Enum):
     SINGLY_LINKED_LIST = 0
     QUEUE = 1
+    SEQUENCE = 2
 
 #ENUMS for error types
 class ResponseType(Enum):

@@ -2,10 +2,10 @@
  This is the implementation of a the custom modular datatype Evolate
 
 """
-
 from data_types import DataType, ResponseType, NodeInterface
 from data_structures.singly_linked_list import SinglyLinkedList
 from data_structures.queue import Queue
+from data_structures.sequence import Sequence
 
 class Evolate():
 
@@ -26,6 +26,8 @@ class Evolate():
             self.rep = SinglyLinkedList()
         elif data_type == DataType.QUEUE:
             self.rep = Queue()
+        elif data_type == DataType.SEQUENCE:
+            self.rep = Sequence()
 
     """
     **************************************************************************************************************

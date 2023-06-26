@@ -30,7 +30,7 @@ class Queue(SubDataStructure):
     
     def remove(self, key: int) -> NodeInterface or ResponseType:
         #check to see if empty Queue
-        if self.get_length() == 0:
+        if self.is_empty():
             return ResponseType.EMPTY_LIST
         
         #check if the front of the queue is what should be gotten
@@ -54,7 +54,7 @@ class Queue(SubDataStructure):
     
     def get(self, key: int) -> NodeInterface or ResponseType:
         #check to see if empty Queue
-        if self.get_length() == 0:
+        if self.is_empty():
             return ResponseType.EMPTY_LIST
         
         #check if the front of the queue is what should be gotten
@@ -81,7 +81,7 @@ class Queue(SubDataStructure):
 
     def update(self, key: int, value: any) -> ResponseType:
         #check to see if empty Queue
-        if self.get_length() == 0:
+        if self.is_empty():
             return ResponseType.EMPTY_LIST
         
         #check if the front of the queue is what should be gotten
@@ -114,7 +114,7 @@ class Queue(SubDataStructure):
     
     def iterate(self, iterate_function) -> ResponseType:
         #add checks for empty list
-        if self.get_length() == 0:
+        if self.is_empty():
             return ResponseType.EMPTY_LIST
         
         iterate_function(self.front())
@@ -138,15 +138,16 @@ class Queue(SubDataStructure):
     the functions below are the helper methods
     """
 
-    #returns bool for is the singly linked list is empty
+    #returns bool for is the queue is empty
     def is_empty(self) -> bool:
         return self.length == 0
     
     #shifts keys of Nodes down when Node is removed and rotate back to beginning
     def shift_keys_down(self) -> ResponseType:
-       while(self.front().get_key() != 0):
+        while(self.front().get_key() != 0):
            self.front().update_key(self.front().get_key() -1)
            self.rotate()
+        return ResponseType.SUCCESS
     
     #This function enqueues a Node to the end of the list
     def enqueue(self, value: any) -> None:
