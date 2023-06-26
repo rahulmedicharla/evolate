@@ -8,7 +8,7 @@ class Stack():
     Each Stack has these variables
 
     data (array): This is an array that holds all the data
-    size (int) : This holds the size of the stack
+    size (int) : This holds the size of fthe stack
     bytes_total_size (int): This holds the total size of stack in bytes
 
     """
