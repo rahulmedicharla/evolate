@@ -4,6 +4,7 @@ from enum import Enum
 class DataType(Enum):
     SINGLY_LINKED_LIST = 0
     QUEUE = 1
+    STACK = 2
 
 #different error types available
 class ErrorType(Enum):

@@ -10,12 +10,14 @@ class SinglyLinkedList():
     head (Node) : this the head pointer that will always point to the head of the linked list
     tail (Node) : this is the tail pointer that will always point to the end of the linked list.
     size (int): tells how long the singly linked list is
+    bytes_total_size (int): tell how many bytes the singly linked list is
 
     """
     def __init__(self) -> None:
         self.head = None
         self.tail = None
         self.size = 0
+        self.bytes_total_size = 0
     
     def add_item(self, value) -> Node:
         #edge case to check for whether it is the first item in the singly linked list;
@@ -27,23 +29,9 @@ class SinglyLinkedList():
             self.tail.next = temp_node
             self.tail = self.tail.next
         
+        self.bytes_total_size += self.tail.size
         self.size += 1
-
-    #function to iterate through linked list and print data
-    def iterate(self) -> None:
-        current = self.head
-        while current != None:
-            current.print_data()
-            current = current.next
-
-    #returns boolean for if the list is empty
-    def is_empty(self) -> bool: 
-        return self.size == 0
     
-    #returns size of singly linked list
-    def get_size(self) -> int:
-        return self.size
-
     #function to remove a Node from the singly linked list
     def remove(self, key) -> Node or ErrorType:
         # Handle empty list scenario
@@ -54,6 +42,7 @@ class SinglyLinkedList():
         if self.head.key == key:
             temp_node = self.head
             self.head = self.head.next
+            self.bytes_total_size -= temp_node.size
             return temp_node
 
         current = self.head
@@ -71,7 +60,28 @@ class SinglyLinkedList():
             return ErrorType.NODE_NOT_FOUND
 
         # Remove the node by updating the 'next' pointers
+        self.bytes_total_size -= previous.next.size
         previous.next = current.next
+
+
+    #function to iterate through linked list and print data
+    def iterate(self) -> None:
+        current = self.head
+        while current != None:
+            current.print_data()
+            current = current.next
+
+    #returns boolean for if the list is empty
+    def is_empty(self) -> bool: 
+        return self.size == 0
+    
+    #returns size of singly linked list
+    def get_size(self) -> int:
+        return self.size
+    
+    #returns size of singly linked list in bytes
+    def get_bytes_size(self) -> int:
+        return self.bytes_total_size
 
         
 
