@@ -8,7 +8,7 @@ class YourDataStructureTest(unittest.TestCase):
 
     def setUp(self):
         # Create an instance of your custom data structure for testing
-        self.data_structure = Evolate(DataType.SEQUENCE)
+        self.data_structure = Evolate(DataType.TREE_MAP)
 
     def test_add(self):
         self.data_structure.add("value1")
@@ -86,6 +86,7 @@ class YourDataStructureTest(unittest.TestCase):
         self.data_structure.add("value3")
 
         res = self.data_structure.remove(1)
+
         res2 = self.data_structure.remove(1)
 
         self.assertEqual(res.get_value(), "value2")

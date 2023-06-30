@@ -27,6 +27,11 @@ class Node(NodeInterface):
         #specific variables for data type implementation
         if self.type == DataType.SINGLY_LINKED_LIST:
             self.next = None
+        
+        if self.type == DataType.TREE_MAP:
+            self.left = None
+            self.right = None
+            self.height = 1
     
     #function to update value of Node
     def update_value(self, new_value: any) -> ResponseType:
@@ -42,4 +47,10 @@ class Node(NodeInterface):
     
     def get_value(self) -> any:
         return self.value
-        
+    
+    def get_height(self) -> int:
+        return self.height
+    
+    def set_height(self, new_height: int) -> ResponseType:
+        self.height = new_height
+        return ResponseType.SUCCESS

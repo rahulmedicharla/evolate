@@ -11,6 +11,9 @@ class DataType(Enum):
     SINGLY_LINKED_LIST = 0
     QUEUE = 1
     SEQUENCE = 2
+    TREE_MAP = 3
+    HASH_MAP = 4
+    PRIORTY_QUEUE = 5
 
 #ENUMS for error types
 class ResponseType(Enum):
@@ -46,6 +49,15 @@ class NodeInterface(ABC):
     def get_value(self) -> any:
         pass
 
+    #function to get height of a Tree Map Node
+    @abstractmethod
+    def get_height(self) -> int:
+        pass
+
+    #function set height of a Tree Map node
+    @abstractmethod
+    def set_height(self, new_height: int) -> ResponseType:
+        pass
 
 #abstract class for every sub data structure
 class SubDataStructure(ABC):

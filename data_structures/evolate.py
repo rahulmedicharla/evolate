@@ -6,6 +6,7 @@ from data_types import DataType, ResponseType, NodeInterface
 from data_structures.singly_linked_list import SinglyLinkedList
 from data_structures.queue import Queue
 from data_structures.sequence import Sequence
+from data_structures.tree_map import TreeMap
 
 class Evolate():
 
@@ -28,6 +29,9 @@ class Evolate():
             self.rep = Queue()
         elif data_type == DataType.SEQUENCE:
             self.rep = Sequence()
+        elif data_type == DataType.TREE_MAP:
+            self.rep = TreeMap()
+
 
     """
     **************************************************************************************************************
