@@ -7,6 +7,7 @@ from data_structures.singly_linked_list import SinglyLinkedList
 from data_structures.queue import Queue
 from data_structures.sequence import Sequence
 from data_structures.tree_map import TreeMap
+from data_structures.hash_map import HashMap
 
 class Evolate():
 
@@ -31,6 +32,8 @@ class Evolate():
             self.rep = Sequence()
         elif data_type == DataType.TREE_MAP:
             self.rep = TreeMap()
+        elif data_type == DataType.HASH_MAP:
+            self.rep = HashMap()
 
 
     """

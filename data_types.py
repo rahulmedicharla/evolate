@@ -59,6 +59,11 @@ class NodeInterface(ABC):
     def set_height(self, new_height: int) -> ResponseType:
         pass
 
+    #function to print items of node
+    @abstractmethod
+    def print(self) -> None:
+        pass
+
 #abstract class for every sub data structure
 class SubDataStructure(ABC):
     

@@ -54,3 +54,9 @@ class Node(NodeInterface):
     def set_height(self, new_height: int) -> ResponseType:
         self.height = new_height
         return ResponseType.SUCCESS
+    
+    def print(self):
+        print("Key: " + str(self.key))
+        print("Value: " + str(self.value))
+        print("Size: " + str(self.size))
+        print("Type: " + str(self.type))
