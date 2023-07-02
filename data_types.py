@@ -13,7 +13,6 @@ class DataType(Enum):
     SEQUENCE = 2
     TREE_MAP = 3
     HASH_MAP = 4
-    PRIORTY_QUEUE = 5
 
 #ENUMS for error types
 class ResponseType(Enum):

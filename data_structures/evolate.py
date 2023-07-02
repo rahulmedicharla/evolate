@@ -19,14 +19,12 @@ class Evolate():
         -> rep (SubDataStructure): this is the current representation of the data 
 
     """
-    def __init__(self, data_type: DataType) -> None:
+    def __init__(self, data_type = DataType) -> None:
         
         self.rep = None
 
         #set _rep based on data_type passed in
-        if data_type == DataType.SINGLY_LINKED_LIST:
-            self.rep = SinglyLinkedList()
-        elif data_type == DataType.QUEUE:
+        if data_type == DataType.QUEUE:
             self.rep = Queue()
         elif data_type == DataType.SEQUENCE:
             self.rep = Sequence()
@@ -34,6 +32,8 @@ class Evolate():
             self.rep = TreeMap()
         elif data_type == DataType.HASH_MAP:
             self.rep = HashMap()
+        else:
+            self.rep = SinglyLinkedList()
 
 
     """

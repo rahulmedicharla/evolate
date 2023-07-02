@@ -8,7 +8,7 @@ class YourDataStructureTest(unittest.TestCase):
 
     def setUp(self):
         # Create an instance of your custom data structure for testing
-        self.data_structure = Evolate(DataType.HASH_MAP)
+        self.data_structure = Evolate(DataType.SINGLY_LINKED_LIST)
 
     def test_add(self):
         self.data_structure.add("value1")
