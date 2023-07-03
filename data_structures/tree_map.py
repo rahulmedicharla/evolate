@@ -37,7 +37,6 @@ class TreeMap(SubDataStructure):
         if removed_node == ResponseType.NODE_NOT_FOUND or removed_node == ResponseType.EMPTY_LIST:
             return removed_node
         
-        
         temp_node = Node(removed_node.get_key(), removed_node.get_value(), DataType.TREE_MAP)
         self.root = self.remove_recursive(self.root, key)
 

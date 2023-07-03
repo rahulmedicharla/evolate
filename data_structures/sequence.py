@@ -60,9 +60,20 @@ class Sequence(SubDataStructure):
         if key >= self.get_length():
             return ResponseType.NODE_NOT_FOUND
         
-        temp_node = self.data[key]
+        left = 0
+        right = self.get_length() -1
 
-        return temp_node
+        while left <= right:
+            mid = (left + right) // 2
+            if self.data[mid].get_key() == key:
+                return self.data[mid]
+            
+            if self.data[mid].get_key() > key:
+                right = mid-1
+            else:
+                left = mid + 1
+        
+        return ResponseType.NODE_NOT_FOUND
 
     def update(self, key: int, value: any) -> ResponseType:
         #check to see if empty Sequence
