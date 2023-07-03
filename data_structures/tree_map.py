@@ -23,9 +23,8 @@ class TreeMap(SubDataStructure):
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
-    def add(self, value: any) -> ResponseType:
-        temp_node = Node(self.length, value, DataType.TREE_MAP)
-
+    def add(self, temp_node: NodeInterface) -> ResponseType:
+        
         self.root = self.insert(self.root, temp_node)
 
         self.length += 1

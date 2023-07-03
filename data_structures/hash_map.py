@@ -26,8 +26,7 @@ class HashMap(SubDataStructure):
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
-    def add(self, value: any) -> ResponseType:
-        temp_node = Node(self.length, value, DataType.HASH_MAP)
+    def add(self, temp_node: NodeInterface) -> ResponseType:
         
         index = self.get_hash(temp_node.get_key())
         self.buckets[index].append(temp_node)

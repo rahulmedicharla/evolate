@@ -25,8 +25,7 @@ class SinglyLinkedList(SubDataStructure):
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
-    def add(self, value: any) -> ResponseType:
-        temp_node = Node(self.length, value, DataType.SINGLY_LINKED_LIST)
+    def add(self, temp_node: NodeInterface) -> ResponseType:
         
         if self.is_empty():
             self.head = temp_node
@@ -53,7 +52,7 @@ class SinglyLinkedList(SubDataStructure):
             self.length -= 1
 
             shift_node = self.head
-            self.shift_keys_down(shift_node)
+            self.shift_keys_down(shift_node, temp_node.get_key())
 
             return temp_node
 
@@ -77,7 +76,7 @@ class SinglyLinkedList(SubDataStructure):
         previous.next = current.next
 
         shift_node = previous.next
-        self.shift_keys_down(shift_node)
+        self.shift_keys_down(shift_node, current.get_key())
 
         return current
 
@@ -162,10 +161,11 @@ class SinglyLinkedList(SubDataStructure):
         return self.length == 0
     
     #shifts the keys of the Nodes down when item is removed
-    def shift_keys_down(self, current: NodeInterface) -> ResponseType:
+    def shift_keys_down(self, current: NodeInterface, old_key: int) -> ResponseType:
         while current != None:
-            new_key = current.get_key() -1
-            current.update_key(new_key)
+            if current.get_key() > old_key:
+                new_key = current.get_key() -1
+                current.update_key(new_key)
             current = current.next
 
         return ResponseType.SUCCESS

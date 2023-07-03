@@ -8,15 +8,21 @@ class YourDataStructureTest(unittest.TestCase):
 
     def setUp(self):
         # Create an instance of your custom data structure for testing
-        self.data_structure = Evolate(DataType.SINGLY_LINKED_LIST)
+        self.data_structure = Evolate(DataType.TREE_MAP)
+
+    def switch_struct(self):
+        self.data_structure.switch_data_structures(DataType.SINGLY_LINKED_LIST)
 
     def test_add(self):
         self.data_structure.add("value1")
+
+        self.switch_struct()
 
         self.assertEqual(self.data_structure.get(0).get_value(), "value1")
 
     def test_multiple_add(self):
         self.data_structure.add("value1")
+        self.switch_struct()
         self.data_structure.add("value2")
 
         self.assertEqual(self.data_structure.get(0).get_value(), "value1")
@@ -24,18 +30,19 @@ class YourDataStructureTest(unittest.TestCase):
 
     def test_empty_get(self):
         response = self.data_structure.get(0)
-
+        self.switch_struct()
         self.assertEqual(response, ResponseType.EMPTY_LIST)
 
     def test_first_element_get(self):
         self.data_structure.add("value1")
+        self.switch_struct()
         response = self.data_structure.get(0)
 
         self.assertEqual(response.get_value(), "value1")
     
     def test_index_out_of_bounds(self):
         self.data_structure.add("value1")
-
+        self.switch_struct()
         response = self.data_structure.get(1)
 
         self.assertEqual(response, ResponseType.NODE_NOT_FOUND)
@@ -43,6 +50,7 @@ class YourDataStructureTest(unittest.TestCase):
     def test_multiple_get(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
+        self.switch_struct()
         self.data_structure.add("value3")
 
         self.assertEqual(self.data_structure.get(0).get_value(), "value1")
@@ -56,6 +64,7 @@ class YourDataStructureTest(unittest.TestCase):
     
     def test_remove_one(self):
         self.data_structure.add("value1")
+        self.switch_struct()
         res = self.data_structure.remove(0)
 
         self.assertEqual(res.get_value(), "value1")
@@ -63,7 +72,7 @@ class YourDataStructureTest(unittest.TestCase):
     
     def test_remove_index_out_of_bounds(self):
         self.data_structure.add("value1")
-
+        self.switch_struct()
         res = self.data_structure.remove(1)
 
         self.assertEqual(res, ResponseType.NODE_NOT_FOUND)
@@ -71,6 +80,7 @@ class YourDataStructureTest(unittest.TestCase):
     def test_remove_multiple(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
+        self.switch_struct()
         self.data_structure.add("value3")
 
         res = self.data_structure.remove(1)
@@ -84,8 +94,10 @@ class YourDataStructureTest(unittest.TestCase):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
         self.data_structure.add("value3")
-
+        
         res = self.data_structure.remove(1)
+        self.switch_struct()
+        
         res2 = self.data_structure.remove(1)
 
         self.assertEqual(res.get_value(), "value2")
@@ -100,7 +112,7 @@ class YourDataStructureTest(unittest.TestCase):
 
     def test_update_one(self):
         self.data_structure.add("value1")
-
+        self.switch_struct()
         res = self.data_structure.update(0, "value2")
 
         self.assertEqual(res, ResponseType.SUCCESS)
@@ -109,6 +121,7 @@ class YourDataStructureTest(unittest.TestCase):
     def test_update_multiple(self):
         self.data_structure.add("value1")
         self.data_structure.add("value2")
+        self.switch_struct()
         self.data_structure.add("value3")
 
         res = self.data_structure.update(1, "value4")
@@ -122,6 +135,7 @@ class YourDataStructureTest(unittest.TestCase):
         self.data_structure.add("value3")
 
         res = self.data_structure.update(1, "value4")
+        self.switch_struct()
         res2 = self.data_structure.update(2, "value5")
 
         self.assertEqual(res, ResponseType.SUCCESS)
@@ -131,7 +145,7 @@ class YourDataStructureTest(unittest.TestCase):
     
     def test_update_out_of_bounds(self):
         self.data_structure.add("value1")
-
+        self.switch_struct()
         res = self.data_structure.update(3, "value2")
 
         self.assertEqual(res, ResponseType.NODE_NOT_FOUND)

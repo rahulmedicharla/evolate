@@ -23,13 +23,14 @@ class Sequence(SubDataStructure):
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
-    def add(self, value: any) -> ResponseType:
+    def add(self, temp_node: NodeInterface) -> ResponseType:
         
-        temp_node = Node(self.length, value, DataType.SEQUENCE)
         self.data.append(temp_node)
 
         self.length += 1
         self.size += getsizeof(temp_node)
+
+        self.data = sorted(self.data, key=lambda obj: obj.key)
 
         return ResponseType.SUCCESS
     

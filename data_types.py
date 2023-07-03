@@ -9,10 +9,9 @@ from abc import ABC, abstractmethod
 #ENUMS for data types
 class DataType(Enum):
     SINGLY_LINKED_LIST = 0
-    QUEUE = 1
-    SEQUENCE = 2
-    TREE_MAP = 3
-    HASH_MAP = 4
+    SEQUENCE = 1
+    TREE_MAP = 2
+    HASH_MAP = 3
 
 #ENUMS for error types
 class ResponseType(Enum):
@@ -68,7 +67,7 @@ class SubDataStructure(ABC):
     
     #add Node to data structure
     @abstractmethod
-    def add(self, value: any) -> ResponseType:
+    def add(self, temp_node: NodeInterface) -> ResponseType:
         pass
 
     #remove Node from data structure with specified key
