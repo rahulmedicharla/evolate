@@ -24,6 +24,13 @@ class Evolate():
         self.rep = None
         self.data_type = None
 
+        self.avg_node_size = 0
+        self.total_len = 0
+        self.total_size = 0
+        self.insert_delete_frequency = 0
+        self.update_frequency = 0
+        self.search_frequency = 0
+
         #set _rep based on data_type passed in
         if data_type == DataType.SEQUENCE:
             self.rep = Sequence()
@@ -71,6 +78,17 @@ class Evolate():
     
     def print_metadata(self) -> ResponseType:
         return self.rep.print_metadata()
+    
+    def get_features(self):
+        self.avg_node_size = float(self.rep.get_size()) / float(self.rep.get_length())
+        self.total_len = self.rep.get_length()
+        self.total_size = self.rep.get_size()
+        print(self.rep.get_insertion_deletion_total())
+        self.insert_delete_frequency = float(self.rep.get_insertion_deletion_total()) / float(self.rep.get_commands_total())
+        self.update_frequency = float(self.rep.get_update_total()) / float(self.rep.get_commands_total())
+        self.search_frequency = float(self.rep.get_search_total()) / float(self.rep.get_commands_total())
+
+        return self.avg_node_size, self.total_len, self.total_size, self.insert_delete_frequency, self.update_frequency, self.search_frequency
 
     def print(self, node: NodeInterface) -> ResponseType:
         print("Key: " + str(node.key))
