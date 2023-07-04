@@ -9,6 +9,9 @@ from data_structures.sequence import Sequence
 from data_structures.tree_map import TreeMap
 from data_structures.hash_map import HashMap
 
+import numpy as np
+
+
 class Evolate():
 
     """
@@ -30,17 +33,17 @@ class Evolate():
             -> total length normalized: 0-1 ratio of size of dataset /1000
             -> insertion deletion frequency: 0-1 ratio of how many insertion & deletion commands there are
             -> search prediction: 0-1 ratio of average search index
-            -> search density: 0-1 ratio of how close together search indexes are
+            -> search randomness: -.25 - .25 ratio of how random the search indexes are. Negative means patterened, positive means random
 
         """
         self.total_length_normalized = 0
         self.insertion_deletion_frequency = 0
         self.search_prediction = 0
-        self.search_density = 0
+        self.search_randomness = 0
 
         self.total_commands = 0
         self.idt_commands = 0
-        self.search_list = []
+        self.search_list = np.array([])
 
         #set _rep based on data_type passed in
         if data_type == DataType.SEQUENCE:
@@ -77,7 +80,8 @@ class Evolate():
     
     def get(self, key: int) -> NodeInterface or ResponseType:
         self.total_commands += 1
-        self.search_list.append(key)
+        self.search_list = np.append(self.search_list, key)
+
         return self.rep.get(key)
 
     def update(self, key: int, value: any) -> ResponseType:
@@ -100,38 +104,12 @@ class Evolate():
         if self.total_length_normalized > 1:
             self.total_length_normalized = 1
 
-        self.search_prediction = self.get_search_prediction()
-        self.search_density = self.get_search_density()
+        self.search_prediction = np.average(self.search_list)
+        std_dev = np.std(self.search_list)
+        self.search_randomness = (float(std_dev) / float(self.rep.get_length())) -.25
 
-
-        return self.insertion_deletion_frequency, self.total_length_normalized, self.search_prediction, self.search_density
+        return self.insertion_deletion_frequency, self.total_length_normalized, self.search_randomness
     
-    def get_search_prediction(self) -> float:
-        avg_key = 0
-        for key in self.search_list:
-            avg_key += key
-        avg_key = float(avg_key) / float(len(self.search_list))
-
-        return avg_key / float(self.rep.get_length())
-    
-    def get_search_density(self) -> float:
-        avg_key = 0
-        for key in self.search_list:
-            avg_key += key
-        avg_key = float(avg_key) / float(len(self.search_list))
-
-        mean_error = []
-        for key in self.search_list:
-            diff = abs(key - avg_key)
-            mean_error.append(float(diff) / float(self.rep.get_length() -1))
-
-        avg_error = 0
-        for error in mean_error:
-            avg_error += error
-        avg_error = float(avg_error) / float(len(mean_error))
-
-        return avg_error
-
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)
     

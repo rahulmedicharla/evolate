@@ -59,6 +59,5 @@ The runtimes provided are in the general case of the data set. However, certain 
 <ul>
     <li>Total length of data set</li>
     <li>Insertion/Deletion frequency</li>
-    <li>Average Search Index</li>
-    <li>Search Density</li>
+    <li>Search Randomness (normalized standard deviation of search pattern)</li>
 </ul> 

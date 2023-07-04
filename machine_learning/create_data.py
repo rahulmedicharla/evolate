@@ -12,15 +12,35 @@ data_structures = {
 # Define the weights for the efficiency scoring function
 weights = {
     'Total Node Length': 0.15,
-    'Insertion/Deletion Frequency': 0.25,
-    'Search Prediction': 0.35,
-    'Search Density': 0.25
+    'Insertion/Deletion Frequency': 0.15,
+    'Search Randomness': 0.64
 }
+
+threshold = .2
 
 
 def select_data_structure(features, weights):
-    # Define the ranges and corresponding data structures
-    pass
+    if features["Search Randomness"] < 0:
+        features["Total Node Length"] = -features["Total Node Length"]
+        weights["Total Node Length"] = .26
+        weights["Insertion/Deletion Frequency"] = .1
+    else:
+        features["Total Node Length"] = -features["Total Node Length"]
+        weights["Total Node Length"] = .13
+        weights["Insertion/Deletion Frequency"] = .23
+
+    calculated_score = features["Search Randomness"] * weights["Search Randomness"] + features["Insertion/Deletion Frequency"] * weights["Insertion/Deletion Frequency"] + features["Total Node Length"] * weights["Total Node Length"]
+
+    if calculated_score > 0 and calculated_score > threshold:
+        return "Sequence"
+    if calculated_score > 0 and calculated_score < threshold:
+        return "Tree Map"
+    if calculated_score < 0 and calculated_score < -threshold:
+        return "Singly Linked List"
+    if calculated_score < 0 and calculated_score > -threshold:
+        return "Hash Map"
+    
+    return "Tree Map"
     
 
 def generate_data_csv(filename, num_data_points):
@@ -29,8 +49,7 @@ def generate_data_csv(filename, num_data_points):
         writer.writerow([
             'Total Node Length',
             'Insertion/Deletion Frequency',
-            'Search Predicition',
-            'Search Density',
+            'Search Randomness',
             'Data Structure'
         ])
 
@@ -38,15 +57,13 @@ def generate_data_csv(filename, num_data_points):
             # Generate random values for the features
             total_node_length = random.uniform(0, 1)
             insertion_deletion_freq = random.uniform(0, 1)
-            search_prediction = random.uniform(0,1)
-            search_density = random.uniform(0,1)
+            search_randomness = random.uniform(-.25,.25)
             
             # Create a dictionary of the features
             features = {
                 'Total Node Length': total_node_length,
                 'Insertion/Deletion Frequency': insertion_deletion_freq,
-                'Search Prediction': search_prediction,
-                'Search Density': search_density
+                'Search Randomness': search_randomness
             }
 
             # Calculate the recommended data structure based on the efficiency scores
@@ -56,8 +73,7 @@ def generate_data_csv(filename, num_data_points):
             writer.writerow([
                 total_node_length,
                 insertion_deletion_freq,
-                search_prediction,
-                search_density,
+                search_randomness,
                 recommended_data_structure
             ])
 
@@ -65,4 +81,4 @@ def generate_data_csv(filename, num_data_points):
 
 
 # Usage example
-generate_data_csv('machine_learning/data/data.csv', 3)
+generate_data_csv('machine_learning/data/data.csv', 1000000)
