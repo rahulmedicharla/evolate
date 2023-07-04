@@ -24,12 +24,23 @@ class Evolate():
         self.rep = None
         self.data_type = None
 
-        self.avg_node_size = 0
-        self.total_len = 0
-        self.total_size = 0
-        self.insert_delete_frequency = 0
-        self.update_frequency = 0
-        self.search_frequency = 0
+        
+        """
+        realtime features to keep track of
+            -> total length normalized: 0-1 ratio of size of dataset /1000
+            -> insertion deletion frequency: 0-1 ratio of how many insertion & deletion commands there are
+            -> search prediction: 0-1 ratio of average search index
+            -> search density: 0-1 ratio of how close together search indexes are
+
+        """
+        self.total_length_normalized = 0
+        self.insertion_deletion_frequency = 0
+        self.search_prediction = 0
+        self.search_density = 0
+
+        self.total_commands = 0
+        self.idt_commands = 0
+        self.search_list = []
 
         #set _rep based on data_type passed in
         if data_type == DataType.SEQUENCE:
@@ -52,16 +63,25 @@ class Evolate():
     """
     
     def add(self, value: any) -> ResponseType:
+        self.total_commands += 1
+        self.idt_commands += 1
+
         temp_node = Node(self.rep.get_length(), value, self.data_type)
         return self.rep.add(temp_node)
     
     def remove(self, key: int) -> NodeInterface or ResponseType:
+        self.total_commands += 1
+        self.idt_commands += 1
+
         return self.rep.remove(key)
     
     def get(self, key: int) -> NodeInterface or ResponseType:
+        self.total_commands += 1
+        self.search_list.append(key)
         return self.rep.get(key)
 
     def update(self, key: int, value: any) -> ResponseType:
+        self.total_commands += 1
         return self.rep.update(key, value)
 
     def get_length(self) -> int:
@@ -72,23 +92,55 @@ class Evolate():
     
     def get_data_type(self) -> DataType:
         return self.data_type
+    
+    def get_features(self) -> tuple:
+        self.insertion_deletion_frequency = float(self.idt_commands) / float(self.total_commands)
+        self.total_length_normalized = float(self.rep.get_length()) / 1000.0
+        
+        if self.total_length_normalized > 1:
+            self.total_length_normalized = 1
+
+        self.search_prediction = self.get_search_prediction()
+        self.search_density = self.get_search_density()
+
+
+        return self.insertion_deletion_frequency, self.total_length_normalized, self.search_prediction, self.search_density
+    
+    def get_search_prediction(self) -> float:
+        avg_key = 0
+        for key in self.search_list:
+            avg_key += key
+        avg_key = float(avg_key) / float(len(self.search_list))
+
+        return avg_key / float(self.rep.get_length())
+    
+    def get_search_density(self) -> float:
+        avg_key = 0
+        for key in self.search_list:
+            avg_key += key
+        avg_key = float(avg_key) / float(len(self.search_list))
+
+        mean_error = []
+        for key in self.search_list:
+            diff = abs(key - avg_key)
+            mean_error.append(float(diff) / float(self.rep.get_length() -1))
+
+        avg_error = 0
+        for error in mean_error:
+            avg_error += error
+        avg_error = float(avg_error) / float(len(mean_error))
+
+        # sum_of_differences = sum(self.search_list[i+1] - self.search_list[i] for i in range(len(self.search_list) - 1))
+        # max_possible_sum = (self.rep.get_length() -1) * (len(self.search_list) - 1)
+
+        # key_density_ratio = sum_of_differences / max_possible_sum
+        return avg_error
 
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)
     
     def print_metadata(self) -> ResponseType:
         return self.rep.print_metadata()
-    
-    def get_features(self):
-        self.avg_node_size = float(self.rep.get_size()) / float(self.rep.get_length())
-        self.total_len = self.rep.get_length()
-        self.total_size = self.rep.get_size()
-        print(self.rep.get_insertion_deletion_total())
-        self.insert_delete_frequency = float(self.rep.get_insertion_deletion_total()) / float(self.rep.get_commands_total())
-        self.update_frequency = float(self.rep.get_update_total()) / float(self.rep.get_commands_total())
-        self.search_frequency = float(self.rep.get_search_total()) / float(self.rep.get_commands_total())
-
-        return self.avg_node_size, self.total_len, self.total_size, self.insert_delete_frequency, self.update_frequency, self.search_frequency
 
     def print(self, node: NodeInterface) -> ResponseType:
         print("Key: " + str(node.key))

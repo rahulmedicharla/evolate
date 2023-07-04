@@ -104,18 +104,3 @@ class SubDataStructure(ABC):
     @abstractmethod
     def print_metadata(self) -> ResponseType:
         pass
-
-    #a function get a number of insertion/deletion commands
-    @abstractmethod
-    def get_insertion_deletion_total(self) -> int:
-        pass
-
-    #a function get a number of update commands
-    @abstractmethod
-    def get_update_total(self) -> int:
-        pass
-
-    #a function get the total number of commands
-    @abstractmethod
-    def get_commands_total(self) -> int:
-        pass

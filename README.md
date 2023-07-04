@@ -17,8 +17,7 @@ Evolate solves the problem using ML. Evolate keeps track of the features of the 
 
 <b>ML: keeps track of the properties of the current data set and uses them to predict when to change data structures</b>
 Features to keep Track of: 
-    -> Average Size of node (bytes)
-    -> Total Size of Node (bytes)
-    -> Total length of node (len of data set)
+    -> Total length of data set (normalized len of data set)
     -> Insertion/Deletion frequency (0-1 ratio of how much insertion/deletion there is compared to total commands)
-    -> Update frequency (0-1 ratios of how much update there is compared to total commands)
+    -> Search Prediction (0-1 ratio of average search index)
+    -> Search Reliability (0-1 ratio of how close together search indexes are)

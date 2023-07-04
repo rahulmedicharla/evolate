@@ -21,18 +21,11 @@ class SinglyLinkedList(SubDataStructure):
         self.length = 0
         self.size = 0
 
-        self.idt = 0
-        self.ut = 0
-        self.st = 0
-        self.tc = 0
-
     """
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
     def add(self, temp_node: NodeInterface) -> ResponseType:
-        self.idt += 1
-        self.tc += 1
         
         if self.is_empty():
             self.head = temp_node
@@ -47,9 +40,6 @@ class SinglyLinkedList(SubDataStructure):
         return ResponseType.SUCCESS
     
     def remove(self, key: int) -> NodeInterface or ResponseType:
-        self.idt += 1
-        self.tc += 1
-
         # Handle empty list scenario
         if self.head == None:
             return ResponseType.EMPTY_LIST
@@ -91,8 +81,6 @@ class SinglyLinkedList(SubDataStructure):
         return current
     
     def get(self, key: int) -> NodeInterface or ResponseType:
-        self.st += 1
-        self.tc += 1
 
         current = self.head
 
@@ -117,9 +105,6 @@ class SinglyLinkedList(SubDataStructure):
         return current
     
     def update(self, key: int, value: any) -> ResponseType:
-        self.ut += 1
-        self.tc += 1
-
         current = self.head
 
         #check for empty list
@@ -165,16 +150,6 @@ class SinglyLinkedList(SubDataStructure):
         print("Size: " + str(self.size))
 
         return ResponseType.SUCCESS
-    
-    
-    def get_insertion_deletion_total(self) -> int:
-        return self.idt
-    
-    def get_update_total(self) -> int:
-        return self.ut
-    
-    def get_commands_total(self) -> int:
-        return self.tc
     
     
     """

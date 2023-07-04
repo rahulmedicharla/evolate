@@ -19,18 +19,11 @@ class TreeMap(SubDataStructure):
         self.length = 0
         self.size = 0
 
-        self.idt = 0
-        self.ut = 0
-        self.st = 0
-        self.tc = 0
-
     """
     ********************************************************************************************************************************************
     the functions below are the ones implemented by SubDataStructure
     """
     def add(self, temp_node: NodeInterface) -> ResponseType:
-        self.idt += 1
-        self.tc += 1
         
         self.root = self.insert(self.root, temp_node)
 
@@ -40,9 +33,6 @@ class TreeMap(SubDataStructure):
         return ResponseType.SUCCESS
     
     def remove(self, key: int) -> NodeInterface or ResponseType:
-        self.idt += 1
-        self.tc += 1
-
         removed_node = self.get(key)
         if removed_node == ResponseType.NODE_NOT_FOUND or removed_node == ResponseType.EMPTY_LIST:
             return removed_node
@@ -57,8 +47,6 @@ class TreeMap(SubDataStructure):
         
 
     def get(self, key: int) -> NodeInterface or ResponseType:
-        self.st += 1
-        self.tc += 1
 
         if self.is_empty():
             return ResponseType.EMPTY_LIST
@@ -66,8 +54,6 @@ class TreeMap(SubDataStructure):
         return self.find(self.root, key)
 
     def update(self, key: int, value: any) -> ResponseType:
-        self.ut += 1
-        self.tc += 1
 
         if self.is_empty():
             return ResponseType.EMPTY_LIST
@@ -98,17 +84,6 @@ class TreeMap(SubDataStructure):
 
         return ResponseType.SUCCESS
 
-    def get_insertion_deletion_total(self) -> int:
-        return self.idt
-    
-    def get_update_total(self) -> int:
-        return self.ut
-    
-    def get_search_total(self) -> int:
-        return self.st
-    
-    def get_commands_total(self) -> int:
-        return self.tc
     
     """
     ********************************************************************************************************************************************
