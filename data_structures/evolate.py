@@ -130,10 +130,6 @@ class Evolate():
             avg_error += error
         avg_error = float(avg_error) / float(len(mean_error))
 
-        # sum_of_differences = sum(self.search_list[i+1] - self.search_list[i] for i in range(len(self.search_list) - 1))
-        # max_possible_sum = (self.rep.get_length() -1) * (len(self.search_list) - 1)
-
-        # key_density_ratio = sum_of_differences / max_possible_sum
         return avg_error
 
     def print_items(self) -> ResponseType:
