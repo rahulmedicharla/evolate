@@ -55,9 +55,12 @@ The runtimes provided are in the general case of the data set. However, certain 
 </ul>
 
 <h3>Machine Learning</h3>
+
+From this, I realized that both iterative (Sequence) and recursive (Tree Map) binary search algorithms are good for when the search was random, but inefficient when there was a pattern in the search indexes. On the other hand Singly Linked Lists and Hash Maps are good for patterened search an inneficient for random searches. On top of this Tree Maps are inefficient when there is a lot of insertion and deletion since we have to maintain the balanced tree, and Hash Maps are inefficient for very large data sets. 
+
 <b>Based on the specifications for the data, these were the features I chose to keep track of in real time</b>
 <ul>
     <li>Total length of data set</li>
     <li>Insertion/Deletion frequency</li>
     <li>Search Randomness (normalized standard deviation of search pattern)</li>
-</ul> 
+</ul>

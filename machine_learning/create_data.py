@@ -11,36 +11,30 @@ data_structures = {
 
 # Define the weights for the efficiency scoring function
 weights = {
-    'Total Node Length': 0.15,
-    'Insertion/Deletion Frequency': 0.15,
-    'Search Randomness': 0.64
+    'Total Node Length': 0.005,
+    'Insertion/Deletion Frequency': 0.395,
+    'Search Randomness': 0.6
 }
 
 threshold = .2
 
 
 def select_data_structure(features, weights):
-    if features["Search Randomness"] < 0:
-        features["Total Node Length"] = -features["Total Node Length"]
-        weights["Total Node Length"] = .26
-        weights["Insertion/Deletion Frequency"] = .1
+    if features["Search Randomness"] <= 0:
+        features["Insertion/Deletion Frequency"] = -features["Insertion/Deletion Frequency"]
     else:
         features["Total Node Length"] = -features["Total Node Length"]
-        weights["Total Node Length"] = .13
-        weights["Insertion/Deletion Frequency"] = .23
 
     calculated_score = features["Search Randomness"] * weights["Search Randomness"] + features["Insertion/Deletion Frequency"] * weights["Insertion/Deletion Frequency"] + features["Total Node Length"] * weights["Total Node Length"]
 
     if calculated_score > 0 and calculated_score > threshold:
         return "Sequence"
-    if calculated_score > 0 and calculated_score < threshold:
+    elif calculated_score > 0 and calculated_score < threshold:
         return "Tree Map"
-    if calculated_score < 0 and calculated_score < -threshold:
+    elif calculated_score < 0 and calculated_score < -threshold:
         return "Singly Linked List"
-    if calculated_score < 0 and calculated_score > -threshold:
+    else:
         return "Hash Map"
-    
-    return "Tree Map"
     
 
 def generate_data_csv(filename, num_data_points):
