@@ -56,11 +56,16 @@ The runtimes provided are in the general case of the data set. However, certain 
 
 <h3>Machine Learning</h3>
 
-From this, I realized that both iterative (Sequence) and recursive (Tree Map) binary search algorithms are good for when the search was random, but inefficient when there was a pattern in the search indexes. On the other hand Singly Linked Lists and Hash Maps are good for patterened search an inneficient for random searches. On top of this Tree Maps are inefficient when there is a lot of insertion and deletion since we have to maintain the balanced tree, and Hash Maps are inefficient for very large data sets. 
-
 <b>Based on the specifications for the data, these were the features I chose to keep track of in real time</b>
 <ul>
     <li>Total length of data set</li>
     <li>Insertion/Deletion frequency</li>
     <li>Search Randomness (normalized standard deviation of search pattern)</li>
-</ul>
+</ul> 
+
+Here is a visualization of a small piece of the data the ML model is trained on. A negative search randomness indicates patterned search while a positive one indicates random.
+<div style="display: inline-flex; flex-direction: row;">
+    <img src="https://github.com/rahulmedicharla/dynamic_db/assets/46610295/5bd4cf3b-43ac-44e5-8672-3df883cbbab6" width=500></img>
+    <img src="https://github.com/rahulmedicharla/dynamic_db/assets/46610295/ea8b2263-08a1-4d26-a27e-d23ea114953f" width=500></img>    
+</div>
+
