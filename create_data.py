@@ -28,11 +28,11 @@ class GenerateData():
                 # Generate random values for the features
                 insertion_deletion_freq = round(random.uniform(0, 1), 3)
                 search_randomness = round(random.uniform(0,.48), 3)
-
+                mean = False
+                key_list = []
                 fraction = Fraction(insertion_deletion_freq).limit_denominator()
                 run_times = []
                 for type in DataType:    
-                    print(str(type))                
                     start_time = time.time()
                     struct = Evolate(type)
 
@@ -40,9 +40,9 @@ class GenerateData():
                         struct.add(add)
 
                     length = struct.get_length()
-                    mean = random.randint(0, length)
-                    key_list = [round(random.normalvariate(mean, search_randomness)) for _ in range(fraction.denominator - fraction.numerator)]
-                    
+                    if not mean:
+                        mean = random.randint(0, length)
+                        key_list = [round(random.normalvariate(mean, search_randomness)) for _ in range(fraction.denominator - fraction.numerator)]
                     for key in key_list:
                         struct.get(key)
                     
@@ -72,6 +72,6 @@ class GenerateData():
 
 # Usage example
 if __name__ == '__main__':
-    create_data = GenerateData("machine_learning/data/visualization.csv", 100)
+    create_data = GenerateData("machine_learning/data/data.csv", 10000)
     create_data.generate()
     

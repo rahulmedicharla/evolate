@@ -1,9 +1,22 @@
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 
-df = pd.read_csv('machine_learning/data/visualization.csv')
+df = pd.read_csv('machine_learning/data/data.csv')
 
-df.plot(kind='scatter', x='Insertion/Deletion Frequency', y='Data Structure')
-df.plot(kind='scatter', x='Search Randomness', y='Data Structure')
+df["Cross 1"] = df["Insertion/Deletion Frequency"] * df["Size"]
+df["Cross 2"] = df["Search Prediction"] * df["Search Randomness"]
 
+color_map = {
+    'SINGLY_LINKED_LIST': 'red',
+    'SEQUENCE': 'green',
+    'HASH_MAP': 'blue',
+    'TREE_MAP': 'yellow'
+}
+# Vectorize the mapping function
+map_color = np.vectorize(color_map.get)
+
+# Plot the DataFrame with colors based on class
+plt.scatter(df['Cross 1'], df['Cross 2'], c=map_color(df['Data Structure']))
 plt.show()
