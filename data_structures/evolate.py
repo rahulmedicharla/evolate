@@ -30,13 +30,12 @@ class Evolate():
         
         """
         realtime features to keep track of
-            -> total length normalized: 0-1 ratio of size of dataset /1000
+            -> total length: total length of the dataset
             -> insertion deletion frequency: 0-1 ratio of how many insertion & deletion commands there are
             -> search prediction: 0-1 ratio of average search index
             -> search randomness: -.25 - .25 ratio of how random the search indexes are. Negative means patterened, positive means random
 
         """
-        self.total_length_normalized = 0
         self.insertion_deletion_frequency = 0
         self.search_prediction = 0
         self.search_randomness = 0
@@ -75,6 +74,7 @@ class Evolate():
     def remove(self, key: int) -> NodeInterface or ResponseType:
         self.total_commands += 1
         self.idt_commands += 1
+        self.search_list = np.append(self.search_list, key)
 
         return self.rep.remove(key)
     
@@ -86,6 +86,7 @@ class Evolate():
 
     def update(self, key: int, value: any) -> ResponseType:
         self.total_commands += 1
+        self.search_list = np.append(self.search_list, key)
         return self.rep.update(key, value)
 
     def get_length(self) -> int:
@@ -98,17 +99,13 @@ class Evolate():
         return self.data_type
     
     def get_features(self) -> tuple:
-        self.insertion_deletion_frequency = float(self.idt_commands) / float(self.total_commands)
-        self.total_length_normalized = float(self.rep.get_length()) / 1000.0
-        
-        if self.total_length_normalized > 1:
-            self.total_length_normalized = 1
+        self.insertion_deletion_frequency = round((float(self.idt_commands) / float(self.total_commands)), 3)
 
         self.search_prediction = np.average(self.search_list)
         std_dev = np.std(self.search_list)
-        self.search_randomness = (float(std_dev) / float(self.rep.get_length())) -.25
+        self.search_randomness = round((float(std_dev) / float(self.rep.get_length())) -.25, 3)
 
-        return self.insertion_deletion_frequency, self.total_length_normalized, self.search_randomness
+        return self.get_size(), self.insertion_deletion_frequency, self.search_randomness, self.search_prediction
     
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)
