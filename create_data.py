@@ -1,8 +1,6 @@
-import csv
-import random
+import csv, random, time
 from data_types import DataType
 from data_structures.evolate import Evolate
-import statistics, time
 from fractions import Fraction
 
 class GenerateData():
@@ -72,6 +70,6 @@ class GenerateData():
 
 # Usage example
 if __name__ == '__main__':
-    create_data = GenerateData("machine_learning/data/data.csv", 10000)
+    create_data = GenerateData("machine_learning/data/data.csv", 100000)
     create_data.generate()
     

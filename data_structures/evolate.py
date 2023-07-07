@@ -26,7 +26,6 @@ class Evolate():
         
         self.rep = None
         self.data_type = None
-
         
         """
         realtime features to keep track of
