@@ -14,7 +14,7 @@ class EvolateNetwork(nn.Module):
     def __init__(self):
         super().__init__()
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.input = nn.Linear(4, 6).to(self.device)
+        self.input = nn.Linear(3, 6).to(self.device)
         self.h1 = nn.Linear(6,8).to(self.device)
         self.h2 = nn.Linear(8,8).to(self.device)
         self.h3 = nn.Linear(8,6).to(self.device)
@@ -34,8 +34,8 @@ def load_data(file_path) -> tuple:
         [0 if ds == "SINGLY_LINKED_LIST" else 1 if ds == "SEQUENCE" else 2 if ds == "TREE_MAP" else 3 for ds in df["Data Structure"]],
         dtype=torch.long
     )
-
-    features = torch.tensor(df.iloc[: ,:4].values, dtype=torch.float)
+    df = df.drop("Size", axis=1)
+    features = torch.tensor(df.iloc[: ,:3].values, dtype=torch.float)
     return features, data_structures
 
 def split_data(features, data_structures) -> tuple:
@@ -44,7 +44,7 @@ def split_data(features, data_structures) -> tuple:
     train_data = TensorDataset(features_train, ds_train)
     test_data = TensorDataset(features_test, ds_test)
 
-    train_loader = DataLoader(train_data, shuffle=True, batch_size=40)
+    train_loader = DataLoader(train_data, shuffle=True, batch_size=50)
     test_loader = DataLoader(test_data, batch_size=len(test_data.tensors[0]))
 
     return train_loader, test_loader

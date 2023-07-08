@@ -32,7 +32,7 @@ class GenerateData():
                 run_times = []
                 for type in DataType:    
                     start_time = time.time()
-                    struct = Evolate(type)
+                    struct = Evolate(type, data_creation=True)
 
                     for add in range(0, fraction.numerator):
                         struct.add(add)
@@ -70,6 +70,6 @@ class GenerateData():
 
 # Usage example
 if __name__ == '__main__':
-    create_data = GenerateData("machine_learning/data/data.csv", 100000)
+    create_data = GenerateData("machine_learning/data/temp.csv", 100000)
     create_data.generate()
     

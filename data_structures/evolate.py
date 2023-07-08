@@ -25,10 +25,11 @@ class Evolate():
         -> rep (SubDataStructure): this is the current representation of the data 
 
     """
-    def __init__(self, data_type = DataType.SINGLY_LINKED_LIST) -> None:
+    def __init__(self, data_type = DataType.TREE_MAP, data_creation = False) -> None:
         
         self.rep = None
         self.data_type = None
+        self.data_creation = data_creation
 
         self.model = EvolateNetwork()
         self.model.load_state_dict(torch.load("machine_learning/weights.pt", map_location=torch.device('cpu')))
@@ -64,6 +65,8 @@ class Evolate():
             self.rep = SinglyLinkedList()
             self.data_type = DataType.SINGLY_LINKED_LIST
 
+        print("Current Data Type: " + str(self.data_type))
+
 
     """
     **************************************************************************************************************
@@ -73,7 +76,6 @@ class Evolate():
     def add(self, value: any) -> ResponseType:
         self.total_commands += 1
         self.idt_commands += 1
-
         self.determine_when_to_switch()
 
         temp_node = Node(self.rep.get_length(), value, self.data_type)
@@ -124,7 +126,7 @@ class Evolate():
             std_dev = np.std(self.search_prediction)
             self.search_randomness = round((float(std_dev) / float(self.rep.get_length())), 3) or 0
 
-        return [int(self.get_size()), float(self.insertion_deletion_frequency), float(self.search_randomness), int(self.search_prediction)]
+        return [float(self.insertion_deletion_frequency), float(self.search_randomness), int(self.search_prediction)]
     
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)
@@ -140,7 +142,7 @@ class Evolate():
         return ResponseType.SUCCESS
     
     def determine_when_to_switch(self):
-        if self.total_commands % 100 == 0 and self.total_commands != 0:
+        if self.total_commands % 500 == 0 and self.total_commands != 0 and not self.data_creation:
             self.evaluate_features()
     
     def evaluate_features(self) -> ResponseType:

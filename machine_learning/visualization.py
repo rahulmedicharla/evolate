@@ -5,8 +5,8 @@ import numpy as np
 
 df = pd.read_csv('machine_learning/data/data.csv')
 
-df["Cross 1"] = df["Insertion/Deletion Frequency"] * df["Size"]
-df["Cross 2"] = df["Search Prediction"] * df["Search Randomness"]
+df["Cross 1"] = df["Insertion/Deletion Frequency"] 
+df["Cross 2"] = df["Search Randomness"]
 
 color_map = {
     'SINGLY_LINKED_LIST': 'red',

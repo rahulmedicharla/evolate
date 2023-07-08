@@ -10,7 +10,7 @@ class YourDataStructureTest(unittest.TestCase):
         # Create an instance of your custom data structure for testing
         self.data_structure = Evolate(DataType.TREE_MAP)
         # boolean value to switch data types
-        self.should_switch = 0
+        self.should_switch = 1
 
     def switch_struct(self):
         self.data_structure.switch_data_structures(DataType.SINGLY_LINKED_LIST)

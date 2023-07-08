@@ -13,7 +13,7 @@ class EvolateNetwork(nn.Module):
     def __init__(self):
         super().__init__()
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.input = nn.Linear(4, 6).to(self.device)
+        self.input = nn.Linear(3, 6).to(self.device)
         self.h1 = nn.Linear(6,8).to(self.device)
         self.h2 = nn.Linear(8,8).to(self.device)
         self.h3 = nn.Linear(8,6).to(self.device)
