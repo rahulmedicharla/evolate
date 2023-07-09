@@ -40,6 +40,8 @@ class TreeMap(SubDataStructure):
         temp_node = Node(removed_node.get_key(), removed_node.get_value(), DataType.TREE_MAP)
         self.root = self.remove_recursive(self.root, key)
 
+        self.root = self.shift_keys_down(self.root, key)
+
         self.length -= 1
         self.size -= getsizeof(temp_node)
 
@@ -154,7 +156,6 @@ class TreeMap(SubDataStructure):
                     return temp
                 
                 temp = self.get_mini_value_node(current.right)
-                self.shift_keys_down(current, temp)
                 current.right = self.remove_recursive(current.right, temp.get_key())
             
             if current == None:
@@ -179,10 +180,32 @@ class TreeMap(SubDataStructure):
             return current
              
                 
-    #shifts the keys of the Nodes down when item is removed
-    def shift_keys_down(self, current: NodeInterface, temp_node: NodeInterface) -> ResponseType:
-        current.update_value(temp_node.get_value())
-        return ResponseType.SUCCESS
+    #shift all keys down if necessary
+    def shift_keys_down(self, current: NodeInterface, key: int) -> ResponseType:
+        if current:
+            self.shift_keys_down(current.left, key)
+
+            if current.get_key() > key:
+                current.update_key(current.get_key() -1)
+
+                current.set_height(1 + max(self.get_node_height(current.left), self.get_node_height(current.right)))
+                balance_factor = self.get_balance_factor(current)
+
+                if balance_factor > 1:
+                    if self.get_balance_factor(current.left) >= 0:
+                        return self.rotate_right(current)
+                    else:
+                        current.left = self.rotate_left(current.left)
+                        return self.rotate_right(current)
+                if balance_factor < -1:
+                    if self.get_balance_factor(current.right) <= 0:
+                        return self.rotate_left(current)
+                    else:
+                        current.right = self.rotate_right(current.right)
+                        return self.rotate_left(current)
+                
+            self.shift_keys_down(current.right, key)
+            return current
 
     #iterate through all nodes recursive
     def iterate_recursive(self, current: NodeInterface, iterate_function) -> None:

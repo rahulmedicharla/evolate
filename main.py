@@ -2,15 +2,12 @@ from data_structures.evolate import Evolate
 import random
 from data_types import DataType
 
-list = Evolate(DataType.SEQUENCE)
+list = Evolate(DataType.TREE_MAP)
 
-for i in range(0,100):
+
+for i in range(0,1000):
     list.add(i)
 
-list.remove(0)
-
-for _ in range(0,1000):
-    index = random.randint(0,10)
-    list.get(index)
-
-    
+for _ in range(0,100):
+    index = random.randint(0, list.get_length())
+    list.remove(index)
