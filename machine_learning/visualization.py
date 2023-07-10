@@ -3,7 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-df = pd.read_csv('machine_learning/data/data.csv')
+df = pd.read_csv('machine_learning/data/algorithmic_data.csv')
 
 df["Cross 1"] = df["Insertion/Deletion Frequency"] 
 df["Cross 2"] = df["Search Randomness"]
@@ -18,5 +18,8 @@ color_map = {
 map_color = np.vectorize(color_map.get)
 
 # Plot the DataFrame with colors based on class
-plt.scatter(df['Cross 1'], df['Cross 2'], c=map_color(df['Data Structure']))
+# plt.scatter(df['Cross 1'], df['Cross 2'], c=map_color(df['Data Structure']))
+plt.scatter(df["Cross 1"], df["Data Structure"])
+plt.xlabel("Search Randomness")
+plt.ylabel("Data Structure")
 plt.show()

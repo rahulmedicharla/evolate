@@ -170,3 +170,15 @@ class SinglyLinkedList(SubDataStructure):
             current = current.next
 
         return ResponseType.SUCCESS
+    
+    def rotate(self, key: int) -> ResponseType:
+        current = self.head
+        while current.get_key() != key:
+            node = current
+            self.head = current.next
+            self.tail.next = node
+            self.tail = self.tail.next
+            self.tail.next = None
+            current = self.head
+
+        return ResponseType.SUCCESS

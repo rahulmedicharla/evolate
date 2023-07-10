@@ -50,7 +50,7 @@ def split_data(features, data_structures) -> tuple:
     return train_loader, test_loader
 
 def train_model(train_loader, test_loader, model, device):
-    num_epochs = 10
+    num_epochs = 100
     train_accuracies, test_accuracies = [], []
 
     loss_function = nn.CrossEntropyLoss()
@@ -85,7 +85,7 @@ def train_model(train_loader, test_loader, model, device):
     return train_accuracies, test_accuracies
 
 def main():
-    features, data_structures = load_data("machine_learning/data/data.csv")
+    features, data_structures = load_data("machine_learning/data/algorithmic_data.csv")
     train_loader, test_loader = split_data(features, data_structures)
 
     model = EvolateNetwork() 
@@ -93,7 +93,7 @@ def main():
     display.set_matplotlib_formats("svg")
 
     train_accuracies, test_accuracies = train_model(train_loader, test_loader, model, model.device)
-    torch.save(model.state_dict(), "machine_learning/weights.pt")
+    torch.save(model.state_dict(), "machine_learning/algorithmic_weights.pt")
 
     fig = plt.figure(tight_layout=True)
     gs = gridspec.GridSpec(nrows=2, ncols=1)

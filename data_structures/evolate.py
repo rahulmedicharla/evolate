@@ -32,7 +32,7 @@ class Evolate():
         self.data_creation = data_creation
 
         self.model = EvolateNetwork()
-        self.model.load_state_dict(torch.load("machine_learning/weights.pt", map_location=torch.device('cpu')))
+        self.model.load_state_dict(torch.load("machine_learning/algorithmic_weights.pt", map_location=torch.device('cpu')))
         self.model.eval()
 
         """
@@ -123,10 +123,11 @@ class Evolate():
             self.search_randomness = 0
         else:
             self.search_prediction = np.average(self.search_list)
-            std_dev = np.std(self.search_prediction)
+            std_dev = np.std(self.search_list)
             self.search_randomness = round((float(std_dev) / float(self.rep.get_length())), 3) or 0
+            self.search_prediction = self.search_prediction / self.get_length()
 
-        return [float(self.insertion_deletion_frequency), float(self.search_randomness), int(self.search_prediction)]
+        return [float(self.insertion_deletion_frequency), float(self.search_randomness), float(self.search_prediction)]
     
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)

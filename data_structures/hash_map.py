@@ -16,7 +16,7 @@ class HashMap(SubDataStructure):
 
     """
     def __init__(self) -> None:
-        self.capacity = 10
+        self.capacity = 5
         self.buckets = [[] for _ in range(self.capacity)]
         self.length = 0
         self.size = 0
@@ -33,8 +33,8 @@ class HashMap(SubDataStructure):
         self.length += 1
         self.size += getsizeof(temp_node)
 
-        if self.length >= self.capacity * .7:
-            self.resize()
+        # if self.length >= self.capacity * .7:
+        #     self.resize()
 
         return ResponseType.SUCCESS
 
