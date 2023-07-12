@@ -74,3 +74,50 @@ As you can see the data is no where linear. Using the pytorch library, I created
 
 After implementing within Evolate, it's now able to run an inference every 500 commands with the modified realtime features to determine whether to switch data structures, and will do so if necessary.
 
+<h3>How to use evolate</h3>
+<ol>
+    <li>Clone repository into your local directory</li>
+    <li>Create a virtual environment named 'venv'</li>
+    <li>Activate virtual environment and install 'requirements.txt'</li>
+    <li>Open main.py and use as you please!</li>
+</ol>
+
+Here are some examples to get started
+
+```
+from data_structures.evolate import Evolate
+from data_types import DataType, NodeInterface
+
+list = Evolate()
+
+#you can also specify initial data type implementation
+# list = Evolate(DataType.SINGLY_LINKED_LIST)
+# list = Evolate(DataType.TREE_MAP)
+# list = Evolate(DataType.HASH_MAP)
+# list = Evolate(DataType.SEQUENCE)
+
+#there are five main functions you can do with evolate
+
+# evolate.add(value :any)
+list.add(0)
+list.add("Hello World")
+list.add({
+    'name': 'first element!',
+    'value':  'value one!'
+})
+
+#evolate.remove(key : int) -> Node
+#evolate follows standard array indexing from range(0,n) for range(0,n-1)
+list.remove(0) -> "0"
+list.remove(0) -> "Hello World"
+
+#evolate.get(key : int) -> Node
+list.get(0) -> "0"
+list.get(1) -> "Hello World"
+
+#evolate.update(key: int, value: any)
+list.update(0, 1)
+list.get(0) -> "1"
+
+```
+

@@ -75,7 +75,6 @@ class TreeMap(SubDataStructure):
         return self.size
     
     def iterate(self, iterate_function) -> ResponseType:
-        
         self.iterate_recursive(self.root, iterate_function)
 
         return ResponseType.SUCCESS

@@ -129,6 +129,9 @@ class Evolate():
 
         return [float(self.insertion_deletion_frequency), float(self.search_randomness), float(self.search_prediction)]
     
+    def iterate(self, iterate_function) -> ResponseType:
+        return self.rep.iterate(iterate_function)
+    
     def print_items(self) -> ResponseType:
         return self.rep.iterate(self.print)
     
